@@ -1,0 +1,21 @@
+[Unit]
+Description=Telegram monitor bot (Proxmox / WireGuard)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/telegrambot
+EnvironmentFile=/opt/telegrambot/.env
+ExecStart=/opt/telegrambot/venv/bin/python /opt/telegrambot/bot.py
+Restart=always
+RestartSec=10
+# Endurecido: el bot solo lee red y su propio directorio
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/telegrambot
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
